@@ -1,3 +1,5 @@
+package FileAnalyzer;
+
 import fileAnalyzer.FileAnalyzer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -7,6 +9,7 @@ import java.io.PrintWriter;
 import java.io.StringReader;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class FileAnalyzerTest {
     String filePath = "nikitchenko.study.inputOutput/src/test/java/testFiles/test.txt";
@@ -44,5 +47,18 @@ class FileAnalyzerTest {
         String actual = fileAnalyzer.analyzeFile();
 
         assertEquals(expected, actual);
+    }
+
+    @Test
+    void testAnalyzeFile_TestToTryAnalyzeFileByBadPath() throws IOException {
+        String badPath = "badPath";
+
+        FileAnalyzer fileAnalyzer = new FileAnalyzer(badPath, badPath);
+
+        Exception exception = assertThrows(RuntimeException.class, fileAnalyzer::analyzeFile);
+        String actualMessage = exception.getMessage();
+        String expected = "File by this path not found, try again";
+
+        assertEquals(expected, actualMessage);
     }
 }

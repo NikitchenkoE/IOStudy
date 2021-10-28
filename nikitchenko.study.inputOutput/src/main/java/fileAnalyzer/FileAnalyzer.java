@@ -5,6 +5,7 @@ import java.util.Scanner;
 import java.util.StringJoiner;
 
 public class FileAnalyzer {
+    private final String BAD_PATH = "File by this path not found, try again";
     private String filePath = "";
     private String word = "";
 
@@ -38,16 +39,23 @@ public class FileAnalyzer {
         try {
             System.out.println(analyzeFile());
         } catch (FileNotFoundException e) {
-            System.out.println("File by this path not found, try again");
+            System.out.println(BAD_PATH);
         }
     }
 
     public String analyzeFile() throws IOException {
-        StringBuilder fileInfo = createStringFromFile(filePath);
-        int wordCount = countNumberOfWord(fileInfo, word);
-        String stringsWithWord = getStringsWithWord(fileInfo, word);
+        try {
+            StringBuilder fileInfo = createStringFromFile(filePath);
+            int wordCount = countNumberOfWord(fileInfo, word);
+            String stringsWithWord = getStringsWithWord(fileInfo, word);
 
-        return String.format("Count of word '%s' = %s, in strings: \n%s ", word, wordCount, stringsWithWord);
+            return String.format("Count of word '%s' = %s, in strings: \n%s ", word, wordCount, stringsWithWord);
+
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(BAD_PATH);
+        }
+
+
     }
 
     private int countNumberOfWord(StringBuilder stringBuilder, String word) {
