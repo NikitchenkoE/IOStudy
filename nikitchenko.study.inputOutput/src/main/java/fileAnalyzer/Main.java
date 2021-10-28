@@ -1,3 +1,5 @@
+package fileAnalyzer;
+
 import java.io.IOException;
 
 public class Main {
