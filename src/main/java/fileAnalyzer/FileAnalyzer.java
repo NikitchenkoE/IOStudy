@@ -23,7 +23,7 @@ public class FileAnalyzer {
     }
 
     public AnalyzedFile analyze() throws IOException {
-        String content = readContentString(filePath).toString();
+        String content = readContentByPath(filePath).toString();
         List<String> sentences = new ArrayList<>(Arrays.asList(content.split("[?.!\n]+")));
         List<String> sentencesWithWord = filter(sentences, word);
         int countWord = countWords(sentencesWithWord, word);
@@ -44,14 +44,26 @@ public class FileAnalyzer {
                 .count());
     }
 
-    private StringBuilder readContentString(String filePath) throws IOException {
+    private StringBuilder readContentByPath(String filePath) throws IOException {
         try {
             InputStream inputStream = new FileInputStream(filePath);
-            BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
-            return readContent(bufferedInputStream);
+            return readContent(inputStream);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(BAD_PATH, e);
         }
+
+//        try {
+//        BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath));
+//        String s;
+//        StringBuilder stringBuilder = new StringBuilder();
+//        while((s=bufferedReader.readLine())!=null){
+//            stringBuilder.append(s);
+//        }
+//        bufferedReader.close;
+//        return stringBuilder;
+//        } catch (FileNotFoundException e) {
+//            throw new RuntimeException(BAD_PATH, e);
+//        }
     }
 
     private StringBuilder readContent(InputStream inputStream) throws IOException {

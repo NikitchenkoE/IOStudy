@@ -20,7 +20,7 @@ class FileAnalyzerTest {
     @BeforeEach
     void createFile() throws IOException {
         PrintWriter printWriter = new PrintWriter(filePath);
-        String fileText = "Maybe it’s just me,\n" +
+        String fileText = "Maybe it’s just me.\n" +
                 "but the next stanza is where I start to have a problem.\n" +
                 "I mean how can the evening bump into the stars?\n" +
                 "And what’s an obbligato of snow?\n" +
