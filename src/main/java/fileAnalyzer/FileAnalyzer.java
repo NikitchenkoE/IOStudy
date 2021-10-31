@@ -52,14 +52,12 @@ public class FileAnalyzer {
             throw new RuntimeException(BAD_PATH, e);
         }
 
-//        try {
-//        BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath));
+//        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath))){
 //        String s;
 //        StringBuilder stringBuilder = new StringBuilder();
 //        while((s=bufferedReader.readLine())!=null){
 //            stringBuilder.append(s);
 //        }
-//        bufferedReader.close;
 //        return stringBuilder;
 //        } catch (FileNotFoundException e) {
 //            throw new RuntimeException(BAD_PATH, e);
