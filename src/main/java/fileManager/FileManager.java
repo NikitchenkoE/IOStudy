@@ -12,6 +12,7 @@ public class FileManager {
     public static int countFilesBefore(String path) {
         File file = new File(path);
         File[] files = file.listFiles();
+        fileOrFolderDoNotExist(file);
         for (File someFile : Objects.requireNonNull(files)) {
             if (someFile.isFile() && !someFile.isHidden()) {
                 fileCount++;
@@ -23,10 +24,32 @@ public class FileManager {
         return fileCount;
     }
 
+    public static int countFilesInside(String path) {
+        int count = 0;
+        File file = new File(path);
+        fileOrFolderDoNotExist(file);
+        if (file.isFile()) {
+            count++;
+        } else {
+            File[] filesPotentiallyWithNull = file.listFiles();
+            if (filesPotentiallyWithNull != null) {
+                for (File fileInside : filesPotentiallyWithNull) {
+                    if (fileInside.isFile()) {
+                        count++;
+                    } else {
+                        count = count + countFilesInside(fileInside.getAbsolutePath());
+                    }
+                }
+            }
+        }
+        return count;
+    }
+
     // public static int countDirs(String path) - принимает путь к папке,
 // возвращает количество папок в папке и всех подпапках по пути
     public static int countDirsBefore(String path) {
         File file = new File(path);
+        fileOrFolderDoNotExist(file);
         File[] files = file.listFiles();
         for (File someFile : Objects.requireNonNull(files)) {
             if (someFile.isDirectory() && !someFile.isHidden()) {
@@ -37,6 +60,26 @@ public class FileManager {
             countDirsBefore(file.getParent());
         }
         return dirCount;
+    }
+
+    public static int countDirsInside(String path) {
+        int count = 0;
+        File file = new File(path);
+        fileOrFolderDoNotExist(file);
+        if (file.isFile()) {
+            return count;
+        } else {
+            File[] filesWithPotentialNull = file.listFiles();
+            if (filesWithPotentialNull != null) {
+                for (File fileInside : filesWithPotentialNull) {
+                    if (fileInside.isDirectory()) {
+                        count++;
+                        count = count + countDirsInside(fileInside.getAbsolutePath());
+                    }
+                }
+            }
+        }
+        return count;
     }
 
     public static void copy(String from, String to) throws IOException {
@@ -118,6 +161,12 @@ public class FileManager {
                 }
                 cannotBeCopiedToAChildFolder(childFile, to);
             }
+        }
+    }
+
+    private static void fileOrFolderDoNotExist(File file){
+        if(!file.exists()){
+            throw new RuntimeException("Nothing was found by this path");
         }
     }
 }
