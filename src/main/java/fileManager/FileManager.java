@@ -42,8 +42,6 @@ public class FileManager {
     public static void copy(String from, String to) throws IOException {
         File fileFrom = new File(from);
         File fileTo = new File(to);
-
-        cannotBeCopiedToAChildFolder(fileFrom, fileTo);
         //Create a directory if it does not exist
         if (!fileTo.exists()) {
             fileTo.mkdirs();
@@ -53,6 +51,7 @@ public class FileManager {
             String pathWithFileName = to + File.separator + fileFrom.getName();
             copyFiles(fileFrom, new File(pathWithFileName));
         } else {
+            cannotBeCopiedToAChildFolder(fileFrom, fileTo);
             //if from is directory, create new package for it and copy files to that
             String updatePath = to + File.separator + fileFrom.getName();
             File newDirectory = new File(updatePath);
@@ -86,26 +85,22 @@ public class FileManager {
 //        Параметр from - путь к файлу или папке, параметр to - путь к папке куда будет производиться копирование.
     public static void move(String from, String to) throws IOException {
         copy(from, to);
-        delete(from, to);
+        delete(from);
     }
 //    - метод по перемещению папок и файлов.
 //        Параметр from - путь к файлу или папке, параметр to - путь к папке куда будет производиться копирование.
 
-    public static void delete(String from, String to) {
+    public static void delete(String from) {
         File fromFile = new File(from);
-        File toFile = new File(to);
         if (fromFile.isFile()) {
             fromFile.delete();
         } else {
-            String[] files = fromFile.list();
-            for (String fileName : Objects.requireNonNull(files)) {
-                if (new File(fromFile.getPath(), fileName).isDirectory()) {
-                    delete(fromFile.getPath() + File.separator + fileName, to);
+            File[] files = fromFile.listFiles();
+            for (File fileName : Objects.requireNonNull(files)) {
+                if (fileName.isDirectory()) {
+                    delete(fileName.getPath());
                 }
-                if (!fileName.equals(toFile.getName())) {
-                    String filePath = from + File.separator + fileName;
-                    new File(filePath).delete();
-                }
+                fileName.delete();
             }
         }
     }
