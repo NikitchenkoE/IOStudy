@@ -102,7 +102,9 @@ public class FileManager {
                 }
                 fileName.delete();
             }
+            fromFile.delete();
         }
+
     }
 
     private static void cannotBeCopiedToAChildFolder(File from, File to) {
