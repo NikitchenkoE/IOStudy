@@ -42,7 +42,7 @@ public class FileManager {
     public static void copy(String from, String to) throws IOException {
         File fileFrom = new File(from);
         File fileTo = new File(to);
-        if (fileTo.isFile()){
+        if (fileTo.isFile()) {
             throw new RuntimeException("You cant copy to another file");
         }
         //Create a directory if it does not exist
@@ -51,8 +51,7 @@ public class FileManager {
         }
         //Check if the file is a file
         if (fileFrom.isFile()) {
-            String pathWithFileName = to + File.separator + fileFrom.getName();
-            copyFiles(fileFrom, new File(pathWithFileName));
+            copyFiles(fileFrom, new File(to, fileFrom.getName()));
         } else {
             cannotBeCopiedToAChildFolder(fileFrom, fileTo);
             //if from is directory, create new package for it and copy files to that
@@ -63,8 +62,8 @@ public class FileManager {
             String[] names = fileFrom.list();
 
             for (String fileName : Objects.requireNonNull(names)) {
-                File fromFileWithUpdatedPath = new File(from + File.separator + fileName);
-                File toFileWithUpdatedPath = new File(updatePath + File.separator + fileName);
+                File fromFileWithUpdatedPath = new File(from, fileName);
+                File toFileWithUpdatedPath = new File(updatePath, fileName);
                 if (fromFileWithUpdatedPath.isDirectory()) {
                     copy(fromFileWithUpdatedPath.getPath(), toFileWithUpdatedPath.getParent());
                 } else {
@@ -93,8 +92,8 @@ public class FileManager {
 //    - метод по перемещению папок и файлов.
 //        Параметр from - путь к файлу или папке, параметр to - путь к папке куда будет производиться копирование.
 
-    public static void delete(String from) {
-        File fromFile = new File(from);
+    public static void delete(String fileToBeDeleted) {
+        File fromFile = new File(fileToBeDeleted);
         if (fromFile.isFile()) {
             fromFile.delete();
         } else {
