@@ -42,6 +42,9 @@ public class FileManager {
     public static void copy(String from, String to) throws IOException {
         File fileFrom = new File(from);
         File fileTo = new File(to);
+        if (fileTo.isFile()){
+            throw new RuntimeException("You cant copy to another file");
+        }
         //Create a directory if it does not exist
         if (!fileTo.exists()) {
             fileTo.mkdirs();
