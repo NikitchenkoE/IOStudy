@@ -164,8 +164,8 @@ public class FileManager {
         }
     }
 
-    private static void fileOrFolderDoNotExist(File file){
-        if(!file.exists()){
+    private static void fileOrFolderDoNotExist(File file) {
+        if (!file.exists()) {
             throw new RuntimeException("Nothing was found by this path");
         }
     }

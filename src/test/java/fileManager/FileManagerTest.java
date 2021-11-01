@@ -24,43 +24,43 @@ class FileManagerTest {
 //    }
 
     @Test
-    void countFilesInsideFolder(){
+    void countFilesInsideFolder() {
         String path = "src/test/java/FileManagerCopyTestFiles/copied";
         int expectedCount = 5;
         int actualCount = FileManager.countFilesInside(path);
 
-        assertEquals(expectedCount,actualCount);
+        assertEquals(expectedCount, actualCount);
     }
 
     @Test
-    void countFilesByDoesntExistPath_ExpectedException(){
+    void countFilesByDoesntExistPath_ExpectedException() {
         String pathTo = "C:\\someFile";
         Exception exception = assertThrows(RuntimeException.class, () -> FileManager.countFilesInside(pathTo));
 
         String expectedMessage = "Nothing was found by this path";
         String actual = exception.getMessage();
 
-        assertEquals(expectedMessage,actual);
+        assertEquals(expectedMessage, actual);
     }
 
     @Test
-    void countDirsByDoesntExistPath(){
+    void countDirsByDoesntExistPath() {
         String pathTo = "C:\\someFile";
         Exception exception = assertThrows(RuntimeException.class, () -> FileManager.countDirsInside(pathTo));
 
         String expectedMessage = "Nothing was found by this path";
         String actual = exception.getMessage();
 
-        assertEquals(expectedMessage,actual);
+        assertEquals(expectedMessage, actual);
     }
 
     @Test
-    void countDirsInsideFolder(){
+    void countDirsInsideFolder() {
         String path = "src/test/java/FileManagerCopyTestFiles/copied";
         int expectedCount = 4;
         int actualCount = FileManager.countDirsInside(path);
 
-        assertEquals(expectedCount,actualCount);
+        assertEquals(expectedCount, actualCount);
     }
 
     @Test

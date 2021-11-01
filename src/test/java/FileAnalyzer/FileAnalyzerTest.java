@@ -98,11 +98,11 @@ class FileAnalyzerTest {
     }
 
     @Test
-    void testFilterToFilterList(){
+    void testFilterToFilterList() {
         FileAnalyzer fileAnalyzer = new FileAnalyzer();
 
         String word = "One";
-        List<String> inputArray= new ArrayList<>();
+        List<String> inputArray = new ArrayList<>();
         inputArray.add("One second");
         inputArray.add("Two");
         inputArray.add("One minute");
@@ -111,24 +111,24 @@ class FileAnalyzerTest {
         expected.add("One second");
         expected.add("One minute");
 
-        List<String> actual = fileAnalyzer.filter(inputArray,word);
+        List<String> actual = fileAnalyzer.filter(inputArray, word);
 
-        assertEquals(expected,actual);
+        assertEquals(expected, actual);
     }
 
     @Test
-    void testCountWords(){
+    void testCountWords() {
         FileAnalyzer fileAnalyzer = new FileAnalyzer();
 
         String word = "One";
-        List<String> inputArray= new ArrayList<>();
+        List<String> inputArray = new ArrayList<>();
         inputArray.add("One second One One");
         inputArray.add("Two");
         inputArray.add("One minute");
 
         int expected = 4;
-        int actual = fileAnalyzer.countWords(inputArray,word);
+        int actual = fileAnalyzer.countWords(inputArray, word);
 
-        assertEquals(expected,actual);
+        assertEquals(expected, actual);
     }
 }
