@@ -9,7 +9,7 @@ public class FileManager {
 
     // public static int countFiles(String path) - принимает путь к папке,
 // возвращает количество файлов в папке и всех подпапках по пути
-    public static int countFiles(String path) {
+    public static int countFilesBefore(String path) {
         File file = new File(path);
         File[] files = file.listFiles();
         for (File someFile : Objects.requireNonNull(files)) {
@@ -18,14 +18,14 @@ public class FileManager {
             }
         }
         if (file.getParent() != null) {
-            countFiles(file.getParent());
+            countFilesBefore(file.getParent());
         }
         return fileCount;
     }
 
     // public static int countDirs(String path) - принимает путь к папке,
 // возвращает количество папок в папке и всех подпапках по пути
-    public static int countDirs(String path) {
+    public static int countDirsBefore(String path) {
         File file = new File(path);
         File[] files = file.listFiles();
         for (File someFile : Objects.requireNonNull(files)) {
@@ -34,7 +34,7 @@ public class FileManager {
             }
         }
         if (file.getParent() != null) {
-            countDirs(file.getParent());
+            countDirsBefore(file.getParent());
         }
         return dirCount;
     }
@@ -93,18 +93,18 @@ public class FileManager {
 //        Параметр from - путь к файлу или папке, параметр to - путь к папке куда будет производиться копирование.
 
     public static void delete(String fileToBeDeleted) {
-        File fromFile = new File(fileToBeDeleted);
-        if (fromFile.isFile()) {
-            fromFile.delete();
+        File file = new File(fileToBeDeleted);
+        if (file.isFile()) {
+            file.delete();
         } else {
-            File[] files = fromFile.listFiles();
+            File[] files = file.listFiles();
             for (File fileName : Objects.requireNonNull(files)) {
                 if (fileName.isDirectory()) {
                     delete(fileName.getPath());
                 }
                 fileName.delete();
             }
-            fromFile.delete();
+            file.delete();
         }
 
     }
