@@ -91,7 +91,7 @@ public class FileManager {
 //    - метод по перемещению папок и файлов.
 //        Параметр from - путь к файлу или папке, параметр to - путь к папке куда будет производиться копирование.
 
-    private static void delete(String from, String to) {
+    public static void delete(String from, String to) {
         File fromFile = new File(from);
         File toFile = new File(to);
         if (fromFile.isFile()) {
